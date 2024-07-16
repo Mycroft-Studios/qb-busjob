@@ -1,21 +1,37 @@
-Config = Config or {}
+Config = Config or {} -- Create the Config table if it doesn't exist.
 
+-- Set a list of allowed vehicles for the bus job.
 Config.AllowedVehicles = {
-    [1] = {model = `bus`, label = Lang:t('info.bus')},
+    [`bus`] = Lang:t('info.bus')
 }
 
-Config.Location = vector4(462.22, -641.15, 28.45, 175.0)
+Config.BusDepot = vector4(462.22, -641.15, 28.45, 175.0) -- Bus depot coordinates.
 
+-- Set the bus job payment amount.
+---@return integer: Returns the payment amount.
+Config.CalculatePayment = function()
+    local payment = math.random(15, 25) -- Generate a random payment amount.
+    local randomAmount = math.random(1, 5) -- Generate a random amount.
+
+    local r1, r2 = math.random(1, 5), math.random(1, 5) -- Generate two random numbers.
+
+    if randomAmount == r1 or randomAmount == r2 then -- If the random amount is equal to r1 or r2.
+        payment = payment + math.random(10, 20) -- Increase the payment amount.
+    end
+
+    return payment -- Return the payment amount.
+end
+
+-- Set the bus stop locations.
 Config.NPCLocations = {
-    Locations = {
-        vector4(304.36, -764.56, 29.31, 252.09),
-        vector4(-110.31, -1686.29, 29.31, 223.84),
-        vector4(-712.83, -824.56, 23.54, 194.7),
-        vector4(-692.63, -670.44, 30.86, 61.84),
-        vector4(-250.14, -886.78, 30.63, 8.67),
-    }
+    vector4(304.36, -764.56, 29.31, 252.09),
+    vector4(-110.31, -1686.29, 29.31, 223.84),
+    vector4(-712.83, -824.56, 23.54, 194.7),
+    vector4(-692.63, -670.44, 30.86, 61.84),
+    vector4(-250.14, -886.78, 30.63, 8.67),
 }
 
+-- Set the NPC skins for the bus job.
 Config.NpcSkins = {
     [1] = {
         `a_f_m_skidrow_01`,

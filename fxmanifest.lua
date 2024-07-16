@@ -18,7 +18,8 @@ client_scripts {
     '@PolyZone/EntityZone.lua',
     '@PolyZone/CircleZone.lua',
     '@PolyZone/ComboZone.lua',
-    'client/main.lua'
+    'client/main.lua',
+    'client/modules/*.lua'
 }
 
 server_script 'server/main.lua'
