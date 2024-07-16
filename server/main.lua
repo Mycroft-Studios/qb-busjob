@@ -6,7 +6,8 @@ function Server:NearBus(src)
     local ped = GetPlayerPed(src) -- Get the player's ped.
     local coords = GetEntityCoords(ped) -- Get the player's coordinates.
 
-    for _, v in pairs(Config.NPCLocations) do -- Loop through the bus stop locations.
+    for i=1, #Config.NPCLocations do -- Loop through the bus stop locations.
+        local v = Config.NPCLocations[i] -- Get the bus stop location.
         local dist = #(coords - v.xyz) -- Calculate the distance between the player and the bus stop.
         if dist < 20.0 then -- If the distance is less than 20.0.
             return true -- Return true.

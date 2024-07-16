@@ -197,26 +197,24 @@ end
 
 -- Handles the interaction between the player and the bus station.
 function BusHandler:StationInteration(isPointInside)
-    local inVeh = self:isBus() -- Check if the player is in a bus.
     self.nearStation = isPointInside -- Set the nearStation flag based on the player's location.
-    
-    if Client.PlayerData.job.name == "bus" then -- Check if the player's job is bus.
-        if isPointInside then -- If the player is inside the station.
-            if not inVeh then -- If the player is not in a bus.
-                exports["qb-core"]:DrawText(Lang:t('info.busstop_text'), 'left') -- Draw the text on the screen.
 
-                Client.currentInteraction = "garage" -- Set the current interaction to garage.
-            else -- If the player is in a bus.
-                exports["qb-core"]:DrawText(Lang:t('info.bus_stop_work'), 'left') -- Draw the text on the screen.
+    -- Check if the player's job is bus.
+    if Client.PlayerData.job.name ~= 'bus' then
+        return -- Return if the player's job is not bus.
+    end
 
-                Client.currentInteraction = "stop" -- Set the current interaction to stop.
-            end
-        else
-            exports["qb-core"]:HideText() -- Hide the text on the screen.
+    if isPointInside then -- Check if the player is inside the bus station.
+        local inVeh = self:isBus() -- Check if the player is in a bus vehicle.
+        Client.currentInteraction = inVeh and 'stop' or 'garage' -- Set the current interaction based on the player's actvity.
 
-            if Client.currentInteraction == "garage" or Client.currentInteraction == "stop" then -- If the current interaction is garage or stop.
-                Client.currentInteraction = nil -- Set the current interaction to nil.
-            end
+        -- Display the text based on the player's activity.
+        exports['qb-core']:DrawText(Lang:t(inVeh and 'info.bus_stop_work' or 'info.busstop_text'), 'left')
+    else -- If the player is outside the bus station.
+        exports['qb-core']:HideText() -- Hide the text.
+
+        if Client.currentInteraction == 'garage' or Client.currentInteraction == 'stop' then  -- Check if the current interaction is garage or stop.
+            Client.currentInteraction = nil -- Reset the current interaction.
         end
     end
 end
