@@ -1,6 +1,6 @@
 Server = {}
 Server.__index = Server
-Server.object = exports['qb-core']:GetCoreObject()
+Server.GetPlayer = exports['qb-core']:GetCoreObject().Functions.GetPlayer
 
 function Server:NearBus(src)
     local ped = GetPlayerPed(src) -- Get the player's ped.
@@ -21,7 +21,7 @@ function Server:DropForExploit(src)
 end
 
 function Server:Pay(src)
-    local player = Server.object.Functions.GetPlayer(src) -- Get the player object.
+    local player = self.GetPlayer(src) -- Get the player object.
     if not player or player.PlayerData.job.name ~= 'bus' then -- If the player's job is not bus.
         self:DropForExploit(src) -- Drop the player with an exploit error message.
         return
