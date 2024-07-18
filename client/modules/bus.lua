@@ -190,7 +190,7 @@ function BusHandler:Stop()
 
             exports["qb-core"]:HideText() -- Hide the text on the screen.
         end
-    else 
+    else
         Client.object.Functions.Notify(Lang:t('error.drop_off_passengers'), 'error') -- Notify the player to drop off the passengers.
     end
 end
