@@ -15,7 +15,6 @@ local TaskGoStraightToCoord = TaskGoStraightToCoord
 local SetPedAsNoLongerNeeded = SetPedAsNoLongerNeeded
 local TaskEnterVehicle = TaskEnterVehicle
 local ClearPedTasksImmediately = ClearPedTasksImmediately
-local TaskEnterVehicle = TaskEnterVehicle
 local GetVehicleMaxNumberOfPassengers = GetVehicleMaxNumberOfPassengers
 local IsVehicleSeatFree = IsVehicleSeatFree
 local TriggerServerEvent    = TriggerServerEvent
