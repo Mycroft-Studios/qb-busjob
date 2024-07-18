@@ -1,8 +1,7 @@
-Server = {}
-Server.__index = Server
-Server.GetPlayer = exports['qb-core']:GetCoreObject().Functions.GetPlayer
+local GetPlayer = exports['qb-core']:GetCoreObject().Functions.GetPlayer
+local cooldowns = {} -- Create a table to store the cooldowns.
 
-function Server:NearBus(src)
+function NearBus(src)
     local ped = GetPlayerPed(src) -- Get the player's ped.
     local coords = GetEntityCoords(ped) -- Get the player's coordinates.
 
@@ -15,20 +14,24 @@ function Server:NearBus(src)
     end
 end
 
-function Server:DropForExploit(src)
+function DropForExploit(src)
     DropPlayer(src, Lang:t('error.exploit')) -- Drop the player with an exploit error message.
     print(("Warning - Player [%s] tried to exploit the bus job."):format(src)) -- Print a warning message.
 end
 
-function Server:Pay(src)
-    local player = self.GetPlayer(src) -- Get the player object.
+function Pay(src)
+    if cooldowns[src] and cooldowns[src] > GetGameTimer() then -- If the player is on cooldown.
+        return -- Return.
+    end
+    cooldowns[src] = GetGameTimer() + Config.Cooldown -- Set the cooldown time.
+    local player = GetPlayer(src) -- Get the player object.
     if not player or player.PlayerData.job.name ~= 'bus' then -- If the player's job is not bus.
-        self:DropForExploit(src) -- Drop the player with an exploit error message.
+        DropForExploit(src) -- Drop the player with an exploit error message.
         return
     end
 
-    if not self:NearBus(src) then -- If the player is not near the bus stop.
-        self:DropForExploit(src) -- Drop the player with an exploit error message.
+    if not NearBus(src) then -- If the player is not near the bus stop.
+        DropForExploit(src) -- Drop the player with an exploit error message.
         return
     end
 
@@ -39,5 +42,5 @@ end
 
 RegisterNetEvent('qb-busjob:server:NpcPay', function()
     local src = source
-    Server:Pay(src) -- Call the Pay method with the player's ID.
+    Pay(src) -- Call the Pay method with the player's ID.
 end)

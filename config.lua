@@ -7,6 +7,8 @@ Config.AllowedVehicles = {
 
 Config.BusDepot = vector4(462.22, -641.15, 28.45, 175.0) -- Bus depot coordinates.
 
+Config.Cooldown = 1000 -- Set the cooldown time on payments.
+
 -- Set the bus job payment amount.
 ---@return integer: Returns the payment amount.
 Config.CalculatePayment = function()
