@@ -1,10 +1,8 @@
 ------------------  Performance  ----------------------
-local AddEventHandler = AddEventHandler
 local RegisterNetEvent = RegisterNetEvent
 local TriggerEvent = TriggerEvent
 local RegisterCommand = RegisterCommand
 local RegisterKeyMapping = RegisterKeyMapping
-local GetCurrentResourceName = GetCurrentResourceName
 -------------------------------------------------------
 
 -- Variables
@@ -18,14 +16,11 @@ PlayerData = QBCore.Functions.GetPlayerData()
 -- Initialize the current interaction as nil
 CurrentInteraction = nil
 
--- This event handler is triggered when a resource starts
-AddEventHandler('onResourceStart', function(resourceName)
-    -- handles script restarts
-    if GetCurrentResourceName() == resourceName then
-        ResetBusData()    -- Reset the bus data
-        ResetNpcData()    -- Initialize the NPCHandler
-        UpdateDepotBlip() -- Update the depot blip
-    end
+-- Initialize the bus data
+CreateThread(function ()
+    ResetBusData()    -- Reset the bus data
+    ResetNpcData()    -- Initialize the NPCHandler
+    UpdateDepotBlip() -- Update the depot blip
 end)
 
 -- Triggered when the player is loaded into the game.
